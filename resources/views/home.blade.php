@@ -1,23 +1,24 @@
-@extends('layouts.app')
 
-@section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">Dashboard</div>
+<!DOCTYPE html>
+<html lang="en">
 
-                <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif
+@include('partials.header')
 
-                    You are logged in!
-                </div>
-            </div>
+<body>
+    <div class="main-wrapper">
+        <div class="header">
+			@include('partials.topnav')
+        </div>
+        <div class="sidebar" id="sidebar">
+            @include('partials.sidebar')
+        </div>
+        {{-- dashbaord --}}
+        <div class="page-wrapper">
+                @include('partials.dashboard')
+                @include('partials.footer')
         </div>
     </div>
-</div>
-@endsection
+    <div class="sidebar-overlay" data-reff=""></div>
+    @include('partials.scripts')
+</body>
+</html>

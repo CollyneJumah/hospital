@@ -1,22 +1,38 @@
 <div class="header-left">
-				<a href="index-2.html" class="logo">
+				<a href="{{ route('home')}}" class="logo">
 					<img src="assets/img/logo.png" width="35" height="35" alt=""> <span>Hospital</span>
 				</a>
-			</div>
+            </div>
+            
 			<a id="toggle_btn" href="javascript:void(0);"><i class="fa fa-bars"></i></a>
             <a id="mobile_btn" class="mobile_btn float-left" href="#sidebar"><i class="fa fa-bars"></i></a>
+            @guest
+            
+            @if(Route::has('register'))
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                </li>
+            @endif
+
+            @else
             <ul class="nav user-menu float-right">
                 <li class="nav-item dropdown has-arrow">
                     <a href="#" class="dropdown-toggle nav-link user-link" data-toggle="dropdown">
                         <span class="user-img">
                         <img class="rounded-circle" src="{{ asset('assets/img/user.jpg')}}" width="24" alt="Admin">
 						</span>
-						<span>Admin</span>
+                    <span>{{Auth::user()->name}}</span>
                     </a>
 					<div class="dropdown-menu">
 						<a class="dropdown-item" href="">My Profile</a>
-						<a class="dropdown-item" href="settings.html">Settings</a>
-						<a class="dropdown-item" href="login.html">Logout</a>
+                        <a class="dropdown-item" href="">Settings</a>
+                        <a class="dropdown-item" href="{{ route('logout') }}" 
+                            onclick="event.preventDefault();
+                            document.getElementById('logout-form').submit();">Logout
+                        </a>
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                            @csrf
+                        </form>
 					</div>
                 </li>
             </ul>
@@ -30,3 +46,4 @@
                     <a class="dropdown-item" href="login.html">Logout</a>
                 </div>
             </div>
+            @endguest
