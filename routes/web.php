@@ -20,5 +20,10 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
-
-Route::resource('/doctors', 'Pages\DoctorsController');
+Route::resources([
+    'doctors' => 'Pages\DoctorsController',
+    'patients' => 'Pages\PatientController',
+    'appointments' => 'Pages\AppointmentsController',
+    'schedule' => 'Pages\ScheduleController',
+    'departments' => 'Pages\DepartmentsController'
+]);

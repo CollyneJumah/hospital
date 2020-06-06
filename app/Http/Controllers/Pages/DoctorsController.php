@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Pages;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Doctors;
 
 class DoctorsController extends Controller
 {
@@ -15,7 +16,8 @@ class DoctorsController extends Controller
     public function index()
     {
         //
-        return view('pages.doctors');
+        $doctors= Doctors::latest()->get();
+        return view('pages.doctors', compact('doctors'));
     }
 
     /**
@@ -26,6 +28,7 @@ class DoctorsController extends Controller
     public function create()
     {
         //
+        return view('crud.doctors.create');
     }
 
     /**
@@ -37,6 +40,23 @@ class DoctorsController extends Controller
     public function store(Request $request)
     {
         //
+        $data= $request->validate([
+            'name' => ['required','min:3','max:100','string'],
+            'doctor_id'=>['required','unique:doctors','numeric'],
+            'email' => ['required','unique:doctors','min:11','max:256','string'],
+            'phone' => ['required','unique:doctors','min:10','max:13','string'],
+            'gender' => ['required'],
+            'county' =>['required','not_in:0'],
+            'address' =>['required','min:3'],
+            'postalcode' => ['required','min:4'],
+            'profile' => ['image','mime:png,jpg,jpeg,gif','max:2048'],
+            'department' => ['required','not_in:0']
+        ]);
+        $doctor=Doctors::create($data);
+        return view('crud.doctors.create');
+        // return redirect('pages.doctors')->with('success', 'Doctor added successfully');
+        return redirect()->route('doctors.index');
+        
     }
 
     /**
@@ -48,6 +68,7 @@ class DoctorsController extends Controller
     public function show($id)
     {
         //
+
     }
 
     /**
@@ -59,6 +80,8 @@ class DoctorsController extends Controller
     public function edit($id)
     {
         //
+        $editDoctor = Doctors::find($id);
+        return view('crud.doctors.edit', compact('editDoctor'));
     }
 
     /**
@@ -68,9 +91,24 @@ class DoctorsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Doctors $doctors)
     {
-        //
+        $data= $request->validate([
+            'name' => ['required','min:3','max:100','string'],
+            'doctor_id'=>['required','unique:doctors','numeric'],
+            'email' => ['required','unique:doctors','min:11','max:256','string'],
+            'phone' => ['required','unique:doctors','min:10','max:13','string'],
+            'gender' => ['required'],
+            'county' =>['required'],
+            'address' =>['required','min:3'],
+            'postalcode' => ['required','min:4'],
+            'profile' => ['image','mime:png,jpg,jpeg,gif','max:2048'],
+            'department' => ['required']
+        ]);
+
+       $doctors->update($data);
+       return redirect( route('doctors.index') )->with('success','Doctor updated');
+        
     }
 
     /**
