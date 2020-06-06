@@ -26,7 +26,7 @@
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label>Doctor Id <span class="text-danger">*</span></label>
-                            <input class="form-control @error('doctor_id') is-invalid @enderror" name="doctor_id" type="number" id="doctor_id" value="{{ old('doctor_id')}}"> 
+                            <input class="form-control @error('doctor_id') is-invalid @enderror" name="doctor_id" type="text" id="doctor_id" value="{{ old('doctor_id')}}"> 
                             @error('doctor_id')
                                 <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
@@ -64,7 +64,7 @@
                                     <option>Male</option>
                                     <option>Female</option>
                                 </select>
-                                @error('county')
+                                @error('gender')
                                     <span class="invalid-feedback">
                                     <strong>{{ $message }}</strong>
                                     </span>

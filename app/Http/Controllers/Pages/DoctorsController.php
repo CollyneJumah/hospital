@@ -42,7 +42,7 @@ class DoctorsController extends Controller
         //
         $data= $request->validate([
             'name' => ['required','min:3','max:100','string'],
-            'doctor_id'=>['required','unique:doctors','numeric'],
+            'doctor_id'=>['required','unique:doctors','string'],
             'email' => ['required','unique:doctors','min:11','max:256','string'],
             'phone' => ['required','unique:doctors','min:10','max:13','string'],
             'gender' => ['required'],
@@ -68,6 +68,8 @@ class DoctorsController extends Controller
     public function show($id)
     {
         //
+        $showDoctors= Doctors::find($id);
+        return view('crud.doctors.profile', compact('showDoctors'));
 
     }
 
@@ -91,23 +93,13 @@ class DoctorsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Doctors $doctors)
+    public function update(Request $request, $id)
     {
-        $data= $request->validate([
-            'name' => ['required','min:3','max:100','string'],
-            'doctor_id'=>['required','unique:doctors','numeric'],
-            'email' => ['required','unique:doctors','min:11','max:256','string'],
-            'phone' => ['required','unique:doctors','min:10','max:13','string'],
-            'gender' => ['required'],
-            'county' =>['required'],
-            'address' =>['required','min:3'],
-            'postalcode' => ['required','min:4'],
-            'profile' => ['image','mime:png,jpg,jpeg,gif','max:2048'],
-            'department' => ['required']
-        ]);
-
-       $doctors->update($data);
-       return redirect( route('doctors.index') )->with('success','Doctor updated');
+       
+        $find=Doctors::findOrFail($id);
+        $find->update($request->except('docotor_id'));
+        return back()->with('success','Doctor updated');
+    //    return redirect( route('doctors.index') )
         
     }
 
@@ -117,8 +109,11 @@ class DoctorsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Doctors $doc)
     {
         //
+        $doc->delete();
+        return back()->with('success','Doctor deleted');
+
     }
 }

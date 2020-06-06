@@ -1,4 +1,4 @@
-@if($errors->any())
+{{-- @if($errors->any())
   @foreach ($errors->all() as $error)
   <div class="alert alert-danger alert-dismissible fade show" id="error" role="alert">
             <strong>Error!</strong> {{ $error }}
@@ -8,21 +8,17 @@
     </div>
       
   @endforeach
-@endif
+@endif --}}
 
 @if(session('success'))
-  <div class="alert alert-success alert-dismissible fade show" id="error" role="alert">
-        <strong>Success!</strong> {{ session('success') }}
-      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
+  <div class="alert alert-success alert-dismissible fade show float-right align-top" id="error" role="alert">
+      <strong>Success!</strong> {{ session('success') }}
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+  </div>
 @endif
-@if (session('success'))
-    <div class="alert alert-success">
-        {{ session('status') }}
-    </div>
-@endif
+
 {{--====================deleting data=============== --}}
  @if(session('danger'))
 <div class="alert alert-danger alert-dismissable fade show">
