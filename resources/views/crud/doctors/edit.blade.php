@@ -62,7 +62,7 @@
 							<div class="form-group">
 								<label>Gender<span class="text-danger">*</span></label>
 								<select class="form-control @error('gender') is-invalid @enderror" name="gender">
-									<option>{{old('gender') ?? $editDoctor->gender}}</option>
+									<option>{{$editDoctor->gender}}</option>
 									<option>Male</option>
 									<option>Female</option>
 								</select>
@@ -79,7 +79,7 @@
 									<div class="form-group">
 										<label>County<span class="text-danger">*</span></label>
 										<select class="form-control @error('county') is-invalid @enderror" name="county">
-											<option>{{ old('county') ?? $editDoctor->county}}-</option>
+											<option>{{$editDoctor->county}}-</option>
 											<option>Nairobi</option>
 											<option>Kisumu</option>
 											<option>Nakuru</option>
@@ -118,13 +118,8 @@
 						<div class="col-sm-6">
 							<div class="form-group">
 								<label>Avatar/Profile picture</label>
-								<div class="profile-upload">
-									<div class="upload-img">
-										<img alt="" src="assets/img/user.jpg">
-									</div>
-									<div class="upload-input">
-										<input type="file" name="profile" class="form-control">
-									</div>
+								<div class="form-group">
+									<input type="file" name="profile" class="form-control">
 								</div>
 							</div>
 						</div>
@@ -132,7 +127,7 @@
 							<div class="form-group">
 								<label>Department/Role<span class="text-danger">*</span></label>
 								<select class="form-control @error('department') is-invalid @enderror" name="department">
-									<option>{{ old('department') ?? $editDoctor->department }}</option>
+									<option>{{$editDoctor->department }}</option>
 									<option>Dentist</option>
 									<option>Neurology</option>
 									<option>Opthalmology</option>
@@ -149,7 +144,7 @@
 						</div>
 					</div>
 					<div class="m-t-20 text-center">
-						<button type="submit" class="btn btn-primary submit-btn">Create Doctor</button>
+						<button type="submit" class="btn btn-primary submit-btn">Update Doctor</button>
 					</div>
 				</form>
 			</div>

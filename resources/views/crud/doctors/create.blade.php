@@ -61,6 +61,7 @@
                                 <label>Gender<span class="text-danger">*</span></label>
                                 <select class="form-control @error('gender') is-invalid @enderror" name="gender">
                                     <option value="">--select--gender--</option>
+                                    <option>{{old('gender')}}</option>
                                     <option>Male</option>
                                     <option>Female</option>
                                 </select>
@@ -78,6 +79,7 @@
                                         <label>County<span class="text-danger">*</span></label>
                                         <select class="form-control @error('county') is-invalid @enderror" name="county">
                                             <option value="">--select--county--</option>
+                                            <option>{{old('county')}}</option>
                                             <option>Nairobi</option>
                                         </select>
                                         @error('county')
@@ -119,17 +121,27 @@
                                         <img alt="" src="assets/img/user.jpg">
                                     </div>
                                     <div class="upload-input">
-                                        <input type="file" name="profile" class="form-control">
+                                        <input type="file" name="profile" class="form-control @error('profile') is-invalid @enderror">
+                                        @error('profile')
+                                            <span class="invalid-feedback">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                        
+                                        @enderror
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="col-sm-6">
                             <div class="form-group">
-                                <label>Department/Role<span class="text-danger">*</span></label>
+                                <label>Department/Role<span class="text-danger">*</span><span><a href="{{route('departments.create')}}" title="add new Department"><i class="fa fa-plus-circle"></i></a></span></label>
                                 <select class="form-control @error('department') is-invalid @enderror" name="department">
                                     <option value="">--select--department:--</option>
-                                    <option>Nairobi</option>
+                                    {{-- desplay all department from department table --}}
+                                    @foreach ($depart as $departments)
+                                        <option value="{{$departments->name ?? old('department') }}">{{ $departments->name ?? old('department') }}</option>
+                                    @endforeach
+                                    
                                 </select>
                                 @error('department')
                                     <span class="invalid-feedback">

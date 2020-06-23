@@ -16,7 +16,7 @@
                     <div class="profile-view">
                         <div class="profile-img-wrap">
                             <div class="profile-img">
-                                <a href="#"><img class="avatar" src="assets/img/doctor-03.jpg" alt=""></a>
+                            <a href="#"><img class="avatar" src="/storage/user_images/{{$showDoctors->profile }}" alt=""></a>
                             </div>
                         </div>
 
@@ -53,6 +53,15 @@
                                             <span class="text">{{$showDoctors->gender}}</span>
                                         </li>
                                     </ul>
+                                    <hr>
+                                    {{-- delete doctor ad all related info --}}
+                                     <span class="pull-right">
+                                        <form action="{{ route('doctors.destroy', $showDoctors->id) }}" method="POST">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-danger input-group-sm btn-sm"><i class="fa fa-trash-o"></i></button>
+                                        </form>
+                                    </span>
                                 </div>
                             </div>
                         </div>

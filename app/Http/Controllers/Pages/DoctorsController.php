@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Pages;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use App\Doctors;
+use App\Department;
 
 class DoctorsController extends Controller
 {
@@ -21,7 +23,9 @@ class DoctorsController extends Controller
     {
         //
         $doctors= Doctors::latest()->get();
-        return view('pages.doctors', compact('doctors'));
+        $countDoctors=Doctors::count();
+
+        return view('pages.doctors', compact('doctors','countDoctors'));
     }
 
     /**
@@ -31,8 +35,10 @@ class DoctorsController extends Controller
      */
     public function create()
     {
-        //
-        return view('crud.doctors.create');
+        //fetch all departments and display on doctors, select
+        $depart =Department::all();
+
+        return view('crud.doctors.create', compact('depart'));
     }
 
     /**
@@ -44,22 +50,57 @@ class DoctorsController extends Controller
     public function store(Request $request)
     {
         //
-        $data= $request->validate([
-            'name' => ['required','min:3','max:100','string'],
-            'doctor_id'=>['required','unique:doctors','string'],
-            'email' => ['required','unique:doctors','min:11','max:256','string'],
-            'phone' => ['required','unique:doctors','min:10','max:13','string'],
-            'gender' => ['required'],
-            'county' =>['required','not_in:0'],
-            'address' =>['required','min:3'],
-            'postalcode' => ['required','min:4'],
-            'profile' => ['image','mime:png,jpg,jpeg,gif','max:2048'],
-            'department' => ['required','not_in:0']
-        ]);
-        $doctor=Doctors::create($data);
-        return view('crud.doctors.create');
+        $this->validate($request,
+            [
+                'name' => ['required','min:3','max:100','string'],
+                'doctor_id'=>['required','unique:doctors','string'],
+                'email' => ['required','unique:doctors','min:11','max:256','string'],
+                'phone' => ['required','unique:doctors','min:10','max:13','string'],
+                'gender' => ['required'],
+                'county' =>['required','not_in:0'],
+                'address' =>['required','min:3'],
+                'postalcode' => ['required','min:4'],
+                'profile' => ['required','image','mimes:png,jpg,jpeg,gif','max:1999'],
+                'department' => ['required','not_in:0']
+            ]);
+            
+            //check if image profile uploaded
+            if($request->has('profile'))
+            {
+                //get file name with extension
+                $fileNameWithExt = $request->file('profile')->getClientOriginalName();
+                //get jut filename
+                $filename=pathinfo($fileNameWithExt, PATHINFO_FILENAME);
+                //get just extension
+                $extension= $request->file('profile')->getClientOriginalExtension();
+                //filename to store
+                $filenameToStore= $filename.'_'.time().'.'.$extension;
+                //upload image
+                $path=$request->file('profile')->storeAs('public/user_images', $filenameToStore);
+            }
+            else
+            {
+                //if no image uploaded save this string
+                $filenameToStore ='noimage.jpg';
+            }
+
+            //save images 
+          $doctors= new Doctors;
+          $doctors->name= $request->name;
+          $doctors->doctor_id= $request->doctor_id;
+          $doctors->email= $request->email;
+          $doctors->phone= $request->phone;
+          $doctors->gender= $request->gender;
+          $doctors->county= $request->county;
+          $doctors->address= $request->address;
+          $doctors->postalcode= $request->postalcode;
+          $doctors->profile= $filenameToStore;
+          $doctors->department= $request->department;
+          $doctors->save();
+        
+        // return view('crud.doctors.create');
         // return redirect('pages.doctors')->with('success', 'Doctor added successfully');
-        return redirect()->route('doctors.index');
+        return back()->with('success','Doctor added');
         
     }
 
@@ -99,8 +140,7 @@ class DoctorsController extends Controller
      */
     public function update(Request $request, $id)
     {
-       
-        $find=Doctors::findOrFail($id);
+        $find=Doctors::find($id);
         $find->update($request->except('docotor_id'));
         return back()->with('success','Doctor updated');
     //    return redirect( route('doctors.index') )
@@ -113,11 +153,18 @@ class DoctorsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Doctors $doc)
+    public function destroy($id)
     {
         //
-        $doc->delete();
-        return back()->with('success','Doctor deleted');
+        $doc=Doctors::find($id);
+        //check for image
+        if($doc->profile != 'noimage.jpg'){
+            //delete image
+            Storage::delete('public/user_images/'.$doc->profile);
+        }
+            $doc->delete();
+            return redirect(route('doctors.index'))->with('success','Doctor deleted');
+    
 
     }
 }

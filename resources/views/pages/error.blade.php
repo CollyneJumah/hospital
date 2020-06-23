@@ -11,7 +11,7 @@
 @endif --}}
 
 @if(session('success'))
-  <div class="alert alert-success alert-dismissible fade show float-right align-top" id="error" role="alert">
+  <div class="alert alert-success alert-dismissible fade show" id="error" role="alert">
       <strong>Success!</strong> {{ session('success') }}
   <button type="button" class="close" data-dismiss="alert" aria-label="Close">
     <span aria-hidden="true">&times;</span>

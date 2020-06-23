@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Pages;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-
+use App\Department;
 class DepartmentsController extends Controller
 {
     /**
@@ -19,7 +19,10 @@ class DepartmentsController extends Controller
     public function index()
     {
         //
-        return view('pages.departments');
+        $departments= Department::latest()->get();
+        $countDepartment=Department::count();
+
+        return view('pages.departments', compact('departments','countDepartment'));
     }
 
     /**
@@ -30,6 +33,7 @@ class DepartmentsController extends Controller
     public function create()
     {
         //
+        return view('crud.departments.create');
     }
 
     /**
@@ -41,6 +45,12 @@ class DepartmentsController extends Controller
     public function store(Request $request)
     {
         //
+        $data=$request->validate([
+            'name'=> ['required','min:3','max:100'],
+            'description' => ['required','min:10','max:255'],
+        ]);
+        $department=Department::create($data);
+        return back()->with('success','Department Added');
     }
 
     /**
@@ -52,6 +62,8 @@ class DepartmentsController extends Controller
     public function show($id)
     {
         //
+       
+
     }
 
     /**
@@ -63,6 +75,9 @@ class DepartmentsController extends Controller
     public function edit($id)
     {
         //
+         $editDepartment=Department::find($id);
+
+         return view('crud.departments.edit', compact('editDepartment'));
     }
 
     /**
@@ -72,9 +87,17 @@ class DepartmentsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Department $department)
     {
         //
+        $request->validate([
+            'name' => ['required'],
+            'description' => ['required'],
+        ]);
+        
+        $department->update($request->all());
+        return back()->with('success', 'Department updated.');
+
     }
 
     /**
