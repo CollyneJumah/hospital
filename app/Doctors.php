@@ -19,5 +19,11 @@ class Doctors extends Model
         'postalcode',
         'profile',
         'department',
+        'department_id',
     ];
+
+    //department can have more than one doctor
+    public function departments(){
+        return $this->hasMany('App\Department','department_id');
+    }
 }

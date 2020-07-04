@@ -2,6 +2,8 @@
 
 namespace App;
 
+//step 7
+use App\Events\UserRegisterEvent;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -35,5 +37,10 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+    ];
+
+    //step 6,, and import userRegisteredEvent
+     protected $dispatchesEvents = [
+        'created' => UserRegisterEvent::class,
     ];
 }

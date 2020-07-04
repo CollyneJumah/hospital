@@ -61,7 +61,8 @@ class DoctorsController extends Controller
                 'address' =>['required','min:3'],
                 'postalcode' => ['required','min:4'],
                 'profile' => ['required','image','mimes:png,jpg,jpeg,gif','max:1999'],
-                'department' => ['required','not_in:0']
+                'department' => ['required','not_in:0'],
+                'department_id'=>['numeric'],
             ]);
             
             //check if image profile uploaded
@@ -96,6 +97,7 @@ class DoctorsController extends Controller
           $doctors->postalcode= $request->postalcode;
           $doctors->profile= $filenameToStore;
           $doctors->department= $request->department;
+        //   $doctors->department_id = $request->id;
           $doctors->save();
         
         // return view('crud.doctors.create');
