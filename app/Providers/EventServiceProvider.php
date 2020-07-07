@@ -22,6 +22,10 @@ class EventServiceProvider extends ServiceProvider
         'App\Events\UserRegisterEvent' => [
         'App\Listeners\SendEmailListener',
         ],
+        //email verification
+        'Illuminate\Auth\Events\Verified' => [
+        'App\Listeners\LogVerifiedUser',
+         ],
     ];
 
     /**

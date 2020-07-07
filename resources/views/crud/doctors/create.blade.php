@@ -78,7 +78,9 @@
                                         <label>County<span class="text-danger">*</span></label>
                                         <select class="form-control @error('county') is-invalid @enderror" name="county">
                                             <option value="">--select--county--</option>
-                                            <option>Nairobi</option>
+                                            @foreach ($county as $count)
+                                            <option value="{{ $count->name }}">{{ $count->name }}</option>
+                                            @endforeach
                                         </select>
                                         @error('county')
                                             <span class="invalid-feedback">
@@ -133,15 +135,14 @@
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label>Department/Role<span class="text-danger">*</span><span><a href="{{route('departments.create')}}" title="add new Department"><i class="fa fa-plus-circle"></i></a></span></label>
-                                <select class="form-control @error('department') is-invalid @enderror" name="department">
+                                <select class="form-control @error('department_id') is-invalid @enderror" name="department_id">
                                     <option value="">--select--department:--</option>
-                                    {{-- desplay all department from department table --}}
+                                    {{-- desplay all department from department table  but save its id--}}
                                     @foreach ($depart as $departments)
-                                        <option value="{{$departments->name ?? old('department') }}">{{ $departments->name ?? old('department') }}</option>
+                                        <option value="{{$departments->id}}">{{ $departments->name }}</option>
                                     @endforeach
-                                    
                                 </select>
-                                @error('department')
+                                @error('department_id')
                                     <span class="invalid-feedback">
                                         <strong>{{ $message }}</strong>
                                     </span>

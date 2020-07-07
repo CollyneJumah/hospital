@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Pages;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Department;
+use App\Doctors;
 class DepartmentsController extends Controller
 {
     /**
@@ -21,6 +22,7 @@ class DepartmentsController extends Controller
         //
         $departments= Department::latest()->get();
         $countDepartment=Department::count();
+      
 
         return view('pages.departments', compact('departments','countDepartment'));
     }

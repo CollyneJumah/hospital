@@ -14,11 +14,11 @@
         {{-- dashbaord --}}
         <div class="page-wrapper">
             {{-- start yield files --}}
-                {{-- @include('partials.dashboard') --}}
-                @yield('content')
-                {{-- end yield file --}}
-                
-                @include('partials.footer')
+            {{-- @include('partials.dashboard') --}}
+            @yield('content')
+            {{-- end yield file --}}
+            
+            @include('partials.footer')
         </div>
     </div>
     <div class="sidebar-overlay" data-reff=""></div>

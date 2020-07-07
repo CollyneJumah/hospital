@@ -24,8 +24,7 @@ class CreateDoctorsTable extends Migration
             $table->string('address')->nullable();
             $table->string('postalcode')->nullable();
             $table->string('profile')->nullable();
-            $table->string('department')->nullable();
-            $table->unsignedBigInteger('department_id');
+            $table->unsignedBigInteger('department_id')->nullable();
             $table->timestamps();
 
             //if records in the on()table gets deleted, these associated foreign key will also be deleted

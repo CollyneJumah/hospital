@@ -27,7 +27,11 @@
                                         <h3 class="user-name m-t-0 mb-0">{{$showDoctors->name }}</h3>
                                         <small class="text-muted">{{$showDoctors->department}}</small>
                                         <div class="staff-id">Employee ID : {{$showDoctors->doctor_id}}</div>
+                                        <form action="#" method="post">
+                                            <input type="file" name="profile" id="profile" class="form-control">
                                         <div class="staff-msg"><a href="chat.html" class="btn btn-primary btn-sm"><i class="fa fa-send-o"></i>:Send Message</a></div>
+
+                                        </form>
                                     </div>
                                 </div>
                                 <div class="col-md-7">

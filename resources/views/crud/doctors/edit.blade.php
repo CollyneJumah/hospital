@@ -79,10 +79,11 @@
 									<div class="form-group">
 										<label>County<span class="text-danger">*</span></label>
 										<select class="form-control @error('county') is-invalid @enderror" name="county">
-											<option>{{$editDoctor->county}}-</option>
-											<option>Nairobi</option>
-											<option>Kisumu</option>
-											<option>Nakuru</option>
+											<option>{{$editDoctor->county}}</option>
+											@foreach ($county as $count)
+											<option>{{$count->name}}-</option>
+											@endforeach
+											
 										</select>
 										@error('county')
 											<span class="invalid-feedback">
@@ -127,13 +128,11 @@
 							<div class="form-group">
 								<label>Department/Role<span class="text-danger">*</span></label>
 								<select class="form-control @error('department') is-invalid @enderror" name="department">
-									<option>{{$editDoctor->department }}</option>
-									<option>Dentist</option>
-									<option>Neurology</option>
-									<option>Opthalmology</option>
-									<option>Orthopedics	</option>
-									<option>Cancer Department</option>
-									<option>ENT Department</option>
+									{{-- <option>{{$editDoctor->department }}</option> --}}
+									<option value="">--Select Department--</option>
+									@foreach ($department as $depart)
+								    <option value="{{ $depart->id }}">{{$depart->name }}</option>
+									@endforeach
 								</select>
 								@error('department')
 									<span class="invalid-feedback">

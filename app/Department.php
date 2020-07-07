@@ -15,6 +15,6 @@ class Department extends Model
     ];
     public function doctors()
     {
-        return $this->belongsTo('App\Doctors','department_id');
+        return $this->belongsTo(Doctors::class,'department_id');
     }
 }

@@ -3,8 +3,16 @@
 
 The body of your message.
 
-@component('mail::button', ['url' => ''])
+@component('mail::button', ['url' => '', 'color' => 'success'])
 Button Text
+@endcomponent
+
+@component('mail::panel')
+    Hello, This is a welcome message to you. Feel
+    free to check ou what we sell.
+@endcomponent
+@component('mail::table')
+    
 @endcomponent
 
 Thanks,<br>

@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use App\Doctors;
 use App\Department;
+use App\County;
 
 class DoctorsController extends Controller
 {
@@ -37,8 +38,9 @@ class DoctorsController extends Controller
     {
         //fetch all departments and display on doctors, select
         $depart =Department::all();
+        $county = County::all();
 
-        return view('crud.doctors.create', compact('depart'));
+        return view('crud.doctors.create', compact('depart','county'));
     }
 
     /**
@@ -61,8 +63,7 @@ class DoctorsController extends Controller
                 'address' =>['required','min:3'],
                 'postalcode' => ['required','min:4'],
                 'profile' => ['required','image','mimes:png,jpg,jpeg,gif','max:1999'],
-                'department' => ['required','not_in:0'],
-                'department_id'=>['numeric'],
+                'department_id' => ['required','not_in:0','numeric'],
             ]);
             
             //check if image profile uploaded
@@ -96,7 +97,7 @@ class DoctorsController extends Controller
           $doctors->address= $request->address;
           $doctors->postalcode= $request->postalcode;
           $doctors->profile= $filenameToStore;
-          $doctors->department= $request->department;
+          $doctors->department_id= $request->department_id;
         //   $doctors->department_id = $request->id;
           $doctors->save();
         
@@ -128,9 +129,12 @@ class DoctorsController extends Controller
      */
     public function edit($id)
     {
-        //
+        
         $editDoctor = Doctors::find($id);
-        return view('crud.doctors.edit', compact('editDoctor'));
+        $county =County::all();
+        $department =Department::all();
+
+        return view('crud.doctors.edit', compact('editDoctor','county','department'));
     }
 
     /**
@@ -140,11 +144,25 @@ class DoctorsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Doctors $doctor)
     {
-        $find=Doctors::find($id);
-        $find->update($request->except('docotor_id'));
-        return back()->with('success','Doctor updated');
+        //validate
+       $updateDoctor= $request->validate(
+            [
+                'name' => ['required','min:3','max:100','string'],
+                'doctor_id'=>['required','unique:doctors','string'],
+                'email' => ['required','unique:doctors','min:11','max:256','string'],
+                'phone' => ['required','unique:doctors','min:10','max:13','string'],
+                'gender' => ['required'],
+                'county' =>['required','not_in:0'],
+                'address' =>['required','min:3'],
+                'postalcode' => ['required','min:4'],
+                // 'profile' => ['required','image','mimes:png,jpg,jpeg,gif','max:1999'],
+                'department_id'=>['required','numeric'],
+            ]);
+
+            $doctor->update($updateDoctor);
+            return back()->with('success','Doctor updated');
     //    return redirect( route('doctors.index') )
         
     }
