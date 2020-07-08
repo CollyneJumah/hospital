@@ -10,9 +10,9 @@
   @endforeach
 @endif --}}
 
-@if(session('success'))
+@if(session('message'))
   <div class="alert alert-success alert-dismissible fade show" id="error" role="alert">
-      <strong>Success!</strong> {{ session('success') }}
+      <strong>Success!</strong> {{ session('message') }}
   <button type="button" class="close" data-dismiss="alert" aria-label="Close">
     <span aria-hidden="true">&times;</span>
   </button>

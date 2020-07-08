@@ -5,9 +5,10 @@
             <div class="col-lg-8 offset-lg-2">
                 <span class="pull-right" title="Back to department list"> <a href="{{ route('departments.index') }}" class="btn btn-info btn-sm"> <i class="fa fa-backward"></i> </a>  </span>
                 <h4 class="page-title">Update Department</h4>
+                  @include('pages.message')
                 <hr>
             </div>
-            @include('pages.error')
+            
 
         </div>
         <div class="row">

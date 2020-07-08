@@ -103,7 +103,7 @@ class DoctorsController extends Controller
         
         // return view('crud.doctors.create');
         // return redirect('pages.doctors')->with('success', 'Doctor added successfully');
-        return back()->with('success','Doctor added');
+        return back()->with('message','Doctor added');
         
     }
 

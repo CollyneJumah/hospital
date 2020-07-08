@@ -4,7 +4,7 @@
 		<div class="row">
 			<div class="col-lg-8 offset-lg-2">
 				<h4 class="page-title">Edit Doctor:<span class="pull-right" title="back to doctors"><a class="btn btn-info btn-sm" href="{{ route('doctors.index')}}"><i class="fa fa-step-backward"></i></a></span></h4>
-				@include('pages.error')
+				@include('pages.message')
 			</div>
 		</div>
 		<hr>

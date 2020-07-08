@@ -7,3 +7,4 @@
 <script src="{{ asset('assets/js/jquery.dataTables.min.js')}}"></script>
 <script src="{{ asset('assets/js/dataTables.bootstrap4.min.js')}}"></script>
 <script src="{{ asset('assets/js/app.js') }}"></script>
+<script src="{{ asset('assets/js/bootstrap-datetimepicker.min.js')}}"></script>

@@ -4,6 +4,7 @@
         <div class="row">
             <div class="col-sm-4 col-3">
                 <h4 class="page-title">Patients</h4>
+                @include('pages.message')
             </div>
             <div class="col-sm-8 col-9 text-right m-b-20">
                 <a href="{{ route('patients.create')}}" class="btn btn btn-primary btn-rounded float-right"><i class="fa fa-plus"></i> Add Patient</a>
@@ -35,8 +36,7 @@
                                         <div class="dropdown dropdown-action">
                                             <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
                                             <div class="dropdown-menu dropdown-menu-right">
-                                                <a class="dropdown-item" href="edit-patient.html"><i class="fa fa-pencil m-r-5"></i> Edit</a>
-                                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#delete_patient"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
+                                                <a class="dropdown-item" href="{{route('patients.show', $patients)}}"><i class="fa fa-user m-r-5"></i>Profile</a>
                                             </div>
                                         </div>
                                     </td>

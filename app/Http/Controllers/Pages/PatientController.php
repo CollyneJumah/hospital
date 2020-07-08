@@ -51,8 +51,8 @@ class PatientController extends Controller
             'patient_id' => ['required','unique:patients','max:7','min:7'],
             'first_name' => ['required','string'],
             'last_name' => ['required','string'],
-            'phone' => ['required','min:10','max:13'],
-            'email' => ['required','email','min:11'],
+            'phone' => ['required','min:10','max:13','unique:patients'],
+            'email' => ['required','email','min:11','unique:patients'],
             'date_of_birth' => ['required','before:today'],
             'gender' => ['required'],
             'address' => ['required'],
@@ -72,9 +72,10 @@ class PatientController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Patients $patient)
     {
-        //
+
+        return view('crud.patients.show', compact('patient'));
     }
 
     /**
@@ -83,9 +84,12 @@ class PatientController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Patients $patient)
     {
         //
+        // $editPatient = Patients::find($id);
+         return view('crud.patients.edit', compact('patient'));
+
     }
 
     /**
@@ -95,9 +99,23 @@ class PatientController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Patients $patient)
     {
         //
+        $request->validate([
+            // 'patient_id' => ['required','unique:patients','max:7','min:7'],
+            'first_name' => ['required','string'],
+            'last_name' => ['required','string'],
+            'phone' => ['required','min:10','max:13'],
+            'email' => ['required','email','min:11'],
+            'date_of_birth' => ['required','before:today'],
+            'gender' => ['required'],
+            'address' => ['required'],
+            'county' => ['required'],
+            'postal_code' => ['required'],
+        ]);
+        $patient->update($request->all());
+        return back()->with('message','Patient data updated');
     }
 
     /**
@@ -106,8 +124,10 @@ class PatientController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Patients $patient)
     {
         //
+        $patient->delete();
+        return redirect()->route('patients.index')->with('message','Patient deleted');
     }
 }
