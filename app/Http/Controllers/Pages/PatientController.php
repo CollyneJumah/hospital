@@ -4,7 +4,8 @@ namespace App\Http\Controllers\Pages;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-
+use App\County;
+use App\Patients;
 class PatientController extends Controller
 {
     /**
@@ -19,7 +20,10 @@ class PatientController extends Controller
     public function index()
     {
         //
-        return view('pages.patients');
+        $showPatients= Patients::latest()->get();
+        $countPatients = Patients::count();
+
+        return view('crud.patients.index',compact('showPatients','countPatients'));
     }
 
     /**
@@ -30,6 +34,8 @@ class PatientController extends Controller
     public function create()
     {
         //
+        $showCounty = County::all();
+        return view('crud.patients.create', compact('showCounty'));
     }
 
     /**
@@ -41,6 +47,23 @@ class PatientController extends Controller
     public function store(Request $request)
     {
         //
+        $data= $request->validate([
+            'patient_id' => ['required','unique:patients','max:7','min:7'],
+            'first_name' => ['required','string'],
+            'last_name' => ['required','string'],
+            'phone' => ['required','min:10','max:13'],
+            'email' => ['required','email','min:11'],
+            'date_of_birth' => ['required','before:today'],
+            'gender' => ['required'],
+            'address' => ['required'],
+            'county' => ['required'],
+            'postal_code' => ['required'],
+        ]);
+
+        $patients= Patients::create($data);
+        return back()->with('message','Patient added');
+
+
     }
 
     /**

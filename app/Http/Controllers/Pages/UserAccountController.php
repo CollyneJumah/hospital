@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Auth;
 use Image;
+use File;
 class UserAccountController extends Controller
 {
     //
@@ -19,6 +20,16 @@ class UserAccountController extends Controller
         {
             $avatar= $request->file('avatar');
             $filename = time().'.'.$avatar->getClientOriginalExtension();
+
+            //delete user image
+            if(Auth::user()->avatar !== 'default.png.' ){
+                $file =public_path('storage/user_images/'.Auth::user()->avatar);
+                if(File::exists($file)){
+                        unlink($file);
+                }
+            }
+
+
             Image::make($avatar)->save( public_path('storage/user_images/' .$filename));
 
             //get current user

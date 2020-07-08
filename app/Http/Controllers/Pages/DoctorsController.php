@@ -26,7 +26,7 @@ class DoctorsController extends Controller
         $doctors= Doctors::latest()->get();
         $countDoctors=Doctors::count();
 
-        return view('pages.doctors', compact('doctors','countDoctors'));
+        return view('crud.doctors.index', compact('doctors','countDoctors'));
     }
 
     /**
