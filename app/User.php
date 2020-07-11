@@ -44,4 +44,10 @@ class User extends Authenticatable implements MustVerifyEmail
      protected $dispatchesEvents = [
         'created' => UserRegisterEvent::class,
     ];
+
+    //user role check
+    public function isRole()
+    {
+        return $this->role;
+    }
 }

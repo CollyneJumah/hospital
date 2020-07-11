@@ -22,7 +22,7 @@ class UserAccountController extends Controller
             $filename = time().'.'.$avatar->getClientOriginalExtension();
 
             //delete user image
-            if(Auth::user()->avatar !== 'default.png.' ){
+            if(Auth::user()->avatar !== 'avatar.png' ){
                 $file =public_path('storage/user_images/'.Auth::user()->avatar);
                 if(File::exists($file)){
                         unlink($file);

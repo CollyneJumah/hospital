@@ -1,5 +1,5 @@
 <div class="header-left">
-    <a href="{{ route('home')}}" class="logo">
+    <a href="{{ route('admin')}}" class="logo">
         <img src="assets/img/logo.png" width="35" height="35" alt=""> <span>Hospital</span>
     </a>
 </div>

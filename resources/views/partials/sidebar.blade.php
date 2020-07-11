@@ -3,7 +3,7 @@
                     <ul>
                         <li class="menu-title">Main</li>
                         <li class="active">
-                            <a href="{{ route('home')}}"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a>
+                            <a href="{{ route('admin')}}"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a>
                         </li>
 						<li>
                             <a href="{{ route('doctors.index')}}"><i class="fa fa-user-md"></i> <span>Doctors</span></a>

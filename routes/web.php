@@ -19,7 +19,8 @@ Route::get('/', function () {
 
 Auth::routes(['verify' => true]);
 
-Route::get('/home', 'HomeController@index')->name('home')->middleware('verified');
+Route::get('/admin', 'HomeController@index')->name('admin')->middleware('verified');
+
 Route::resources([
     'doctors' => 'Pages\DoctorsController',
     'patients' => 'Pages\PatientController',

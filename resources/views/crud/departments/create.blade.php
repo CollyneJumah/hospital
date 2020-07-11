@@ -12,7 +12,7 @@
             </div>
         </div>
         <div class="row">
-            @include('pages.error')
+            @include('pages.message')
             <div class="col-lg-8 offset-lg-2">
                 <form method="POST" action="{{route('departments.store')}}" autocomplete="off">
                     @csrf
