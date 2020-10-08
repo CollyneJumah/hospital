@@ -54,12 +54,12 @@ class DoctorsController extends Controller
         //
         $this->validate($request,
             [
-                'name' => ['required','min:3','max:100','string'],
-                'doctor_id'=>['required','unique:doctors','string'],
-                'email' => ['required','unique:doctors','min:11','max:256','string'],
-                'phone' => ['required','unique:doctors','min:10','max:13','string'],
+                'name' => ['min:3','max:100','string'],
+                'doctor_id'=>['string'],
+                'email' => ['required','min:11','max:256','string'],
+                'phone' => ['required','min:10','max:13','string'],
                 'gender' => ['required'],
-                'county' =>['required','not_in:0'],
+                'county' =>['nullable','not_in:0'],
                 'address' =>['required','min:3'],
                 'postalcode' => ['required','min:4'],
                 'profile' => ['required','image','mimes:png,jpg,jpeg,gif','max:1999'],
@@ -121,12 +121,6 @@ class DoctorsController extends Controller
 
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
         
