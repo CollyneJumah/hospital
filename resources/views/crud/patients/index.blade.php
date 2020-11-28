@@ -6,18 +6,17 @@
                 <h4 class="page-title">Patients</h4>
                 @include('pages.message')
             </div>
-            <div class="col-sm-8 col-9 text-right m-b-20">
-                <a href="{{ route('patients.create')}}" class="btn btn btn-primary btn-rounded float-right"><i class="fa fa-plus"></i> Add Patient</a>
+            <div class="text-right col-sm-8 col-9 m-b-20">
+                <a href="{{ route('patients.create')}}" class="float-right btn btn-primary btn-rounded"><i class="fa fa-plus"></i> Add Patient</a>
             </div>
         </div>
         <div class="row">
             <div class="col-md-12">
                 <div class="table-responsive">
-                    <table class="table table-border table-striped custom-table datatable mb-0">
+                    <table class="table mb-0 table-border table-striped custom-table datatable">
                         <thead>
                             <tr>
                                 <th>Name</th>
-                                <th>Patient Id</th>
                                 <th>Contacts Details</th>
                                 <th>Phone</th>
                                 <th>Email</th>
@@ -28,7 +27,6 @@
                             @foreach ($showPatients as $patients)
                                 <tr>
                                     <td><img width="28" height="28" src="assets/img/user.jpg" class="rounded-circle m-r-5" alt=""> {{$patients->first_name}} {{$patients->last_name }}</td>
-                                    <td>{{ $patients->patient_id}}</td>
                                     <td>{{ $patients->address}}, {{$patients->county}}, {{$patients->postal_code}}</td>
                                     <td>{{ $patients->phone}}</td>
                                     <td>{{ $patients->email}}</td>
@@ -36,7 +34,7 @@
                                         <div class="dropdown dropdown-action">
                                             <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
                                             <div class="dropdown-menu dropdown-menu-right">
-                                                <a class="dropdown-item" href="{{route('patients.show', $patients)}}"><i class="fa fa-user m-r-5"></i>Profile</a>
+                                                <a class="dropdown-item" href="{{route('patients.show', $patients)}} {{ $patients->first_name}} {{ rand()}}"><i class="fa fa-user m-r-5"></i>Profile</a>
                                             </div>
                                         </div>
                                     </td>

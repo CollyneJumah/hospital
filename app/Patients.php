@@ -19,5 +19,12 @@ class Patients extends Model
         'address',
         'county',
         'postal_code',
+        'created_by'
     ];
+
+    public function appointments(){
+        return $this->hasMany(Appointments::class,'patient_id');
+        
+    }
+
 }

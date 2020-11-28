@@ -2,16 +2,17 @@
 
 namespace App\Http\Controllers\Pages;
 
+use App\Appointments;
+use App\Department;
+use App\Doctors;
 use App\Http\Controllers\Controller;
+use App\Patients;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AppointmentsController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    
     public function __construct()
     {
         $this->middleware('auth');
@@ -19,70 +20,66 @@ class AppointmentsController extends Controller
     public function index()
     {
         //
-        return view('pages.appointments');
+        $arrayAppointment = [
+            'showAppointments' => Appointments::OrderBy('created_at','desc')->get(),
+        ];
+        return view('pages.appointments', compact('arrayAppointment'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+   
     public function create()
     {
         //
+        $arrayAll = [
+            'showPatients' => Patients::all(),
+            'showDepartments' => Department::all(),
+            'showDoctors' => Doctors::all(),
+        ];
+        return view('crud.appointments.create',
+            compact('arrayAll')
+        );
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    
+    public function store(Request $request, Appointments $appointment)
     {
         //
+        $this->validate($request, [
+            'patient_id' => ['required'],
+            'department_id' => ['required'],
+            'doctor_id' => ['required'],
+            'appointment_date' => ['required'],
+            'appointment_time' => ['required'],
+            'email' => ['required','email'],
+            'phone' => ['required'],
+            'remark' => ['required'],
+        ]);
+        $request['created_by'] = Auth::user()->name;
+        $appointment->create($request->all());
+        return redirect( route('appointments.index') )->with('toast_success', 'Department deleted.');
+
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    public function getVendorEmailAndPhone(Request $request)
+    {
+        $fetchEmailAndPhone = Patients::select('email','phone', 'id')->where('id', $request->id)->first();
+                return response()->json($fetchEmailAndPhone);
+    }
     public function show($id)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
         //

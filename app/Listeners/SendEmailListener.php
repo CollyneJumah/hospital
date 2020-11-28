@@ -33,7 +33,7 @@ class SendEmailListener
         //step 5.
        // dd($event->user);
 
-         Mail::to($event->user)->send(new WelcomeEmail( $event->user));
+         Mail::to($event->user)->send(new WelcomeEmail($event->user));
 
     }
 }

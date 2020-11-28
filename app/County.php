@@ -9,6 +9,10 @@ class County extends Model
     //
     protected $table="county";
     protected $fillable=[
-        'name'
+        'name',
+        'code'
     ];
+    public function doctor(){
+        return $this->hasOne(Doctors::class);
+    }
 }

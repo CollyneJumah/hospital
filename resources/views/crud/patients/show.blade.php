@@ -6,7 +6,7 @@
              <h4 class="page-title">Patient :: {{ $patient->patient_id}}</h4>
             </div>
 
-            <div class="col-sm-5 col-6 text-right m-b-30">
+            <div class="text-right col-sm-5 col-6 m-b-30">
                 <a href="{{route('patients.edit',$patient->id)}}" class="btn btn-primary btn-rounded"><i class="fa fa-pencil"></i> Edit Profile</a>
             </div>
         </div>
@@ -15,7 +15,7 @@
                 <div class="col-md-12">
                     <div class="profile-view">
                         <div class="profile-img-wrap">
-                            <img class="inline-block" src="/storage/user_images/avatar.png" alt="user">
+                            <img class="inline-block" src="{{ URL::to('/storage/doctor_images/user.jpg')}}" alt="user">
                             <div class="fileupload btn">
                                 <span class="btn-text">edit</span>
                                 <input class="upload" type="file">
@@ -25,8 +25,8 @@
                             <div class="row">
                                 <div class="col-md-5">
                                     <div class="profile-info-left">
-                                        <h3 class="user-name m-t-0 mb-0">{{$patient->name }}</h3>
-                                        <div class="staff-id">Patient ID : {{$patient->patient_id}}</div>
+                                        <h3 class="mb-0 user-name m-t-0">{{$patient->name }}</h3>
+                                        <div class="staff-id">{{$patient->first_name}} {{$patient->last_name}}</div>
                                     </div>
                                 </div>
                                 <div class="col-md-7">
@@ -59,11 +59,12 @@
                                     <hr>
                                     {{-- delete doctor ad all related info --}}
                                      <span class="pull-right">
-                                        <form action="{{ route('patients.destroy',$patient)}}" method="POST">
+                                        <a href="{{ route('patients.index')}}" class="shadow btn btn-info input-group-sm btn-sm" title="back to patient list" style="border-radius: 50%"><i class="fa fa-angle-double-left"></i></a>
+                                        <a href="#" class="shadow btn btn-danger input-group-sm btn-sm" onclick="confirm('You\'re about to delete {{ $patient->first_name}}. All related information will be deleted.') ? document.getElementById('delete-patient-{{ $patient}}').submit() : '' " title="delete {{ $patient->first_name}}" style="border-radius: 50%"><i class="fa fa-trash-o"></i></a>
+
+                                        <form action="{{ route('patients.destroy',$patient)}}" method="POST" id="delete-patient-{{ $patient }}">
                                         @csrf
                                         @method('DELETE')
-
-                                        <button type="submit" class="btn btn-danger input-group-sm btn-sm"><i class="fa fa-trash-o"></i></button>
                                         </form>
                                     </span>
                                 </div>

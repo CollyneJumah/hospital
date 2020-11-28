@@ -36,17 +36,7 @@
                                 @enderror
                             </div>
                         </div>
-                         <div class="col-sm-6">
-                            <div class="form-group">
-                                <label>Patient ID <span class="text-danger">*</span></label>
-                                <input class="form-control @error('patient_id') is-invalid @enderror" type="text" name="patient_id" value="{{$patient->patient_id ?? old('patient_id')}}" disabled>
-                                @error('patient_id')
-                                    <span class="invalid-feedback">
-                                        <strong>{{$message}}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
+                        
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label>Phone <span class="text-danger">*</span></label>
@@ -133,7 +123,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="m-t-20 text-center">
+                    <div class="text-center m-t-20">
                         <button class="btn btn-primary submit-btn">Save</button>
                     </div>
                 </form>

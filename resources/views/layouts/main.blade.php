@@ -4,6 +4,7 @@
 @include('partials.header')
 
 <body>
+    @include('sweetalert::alert')
     <div class="main-wrapper">
         <div class="header">
 			@include('partials.topnav')

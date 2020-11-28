@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,9 +14,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
 Auth::routes(['verify' => true]);
 
@@ -29,3 +30,6 @@ Route::resources([
     'departments' => 'Pages\DepartmentsController',
     'account-profile' => 'Pages\UserAccountController'
 ]);
+
+Route::post('/updateDoctorProfile', 'Pages\DoctorsController@updateDoctorProfile');
+Route::get('getPatientEmailAndPhone','Pages\AppointmentsController@getVendorEmailAndPhone');

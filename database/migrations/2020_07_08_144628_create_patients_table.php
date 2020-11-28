@@ -17,7 +17,6 @@ class CreatePatientsTable extends Migration
             $table->id();
             $table->string('first_name');
             $table->string('last_name');
-            $table->string('patient_id')->unique();
             $table->string('phone');
             $table->string('email');
             $table->string('date_of_birth');
@@ -25,6 +24,7 @@ class CreatePatientsTable extends Migration
             $table->string('address');
             $table->string('county');
             $table->string('postal_code');
+            $table->string('created_by');
             $table->timestamps();
         });
     }

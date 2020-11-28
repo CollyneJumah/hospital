@@ -11,10 +11,16 @@ class Department extends Model
     
     protected $fillable=[
         'name',
-        'description'
+        'description',
+        'created_by'
     ];
-    public function doctors()
-    {
-        return $this->belongsTo(Doctors::class,'department_id');
+    public function doctors(){
+        return $this->hasOne(Doctors::class,'department_id');
+        
     }
+    public function appointments(){
+        return $this->hasMany(Appointments::class,'department_id');
+        
+    }
+
 }

@@ -12,7 +12,7 @@
                 <form action="{{ route('doctors.store') }}" method="POST" autocomplete="off" enctype="multipart/form-data">
                     @csrf
                     <div class="row">
-                        <div class="col-sm-6">
+                        <div class="col-sm-12">
                             <div class="form-group">
                                 <label>Full Name <span class="text-danger">*</span></label>
                                 <input class="form-control @error('name') is-invalid @enderror" value="{{ old('name')}}" name="name" id="name" type="text">
@@ -23,7 +23,7 @@
                                 @enderror
                             </div>
                         </div>
-                        <div class="col-sm-6">
+                        {{-- <div class="col-sm-6">
                             <div class="form-group">
                                 <label>Doctor Id <span class="text-danger">*</span></label>
                             <input class="form-control @error('doctor_id') is-invalid @enderror" name="doctor_id" type="text" id="doctor_id" value="{{ old('doctor_id')}}"> 
@@ -33,7 +33,7 @@
                                 </span>
                             @enderror
                             </div>
-                        </div>
+                        </div> --}}
                         <div class="col-sm-4">
                             <div class="form-group">
                                 <label>Email <span class="text-danger">*</span></label>
@@ -76,13 +76,13 @@
                                 <div class="col-sm-4">
                                     <div class="form-group">
                                         <label>County<span class="text-danger">*</span></label>
-                                        <select class="form-control @error('county') is-invalid @enderror" name="county">
+                                        <select class="form-control @error('county_id') is-invalid @enderror" name="county_id">
                                             <option value="">--select--county--</option>
                                             @foreach ($county as $count)
-                                            <option value="{{ $count->name }}">{{ $count->name }}</option>
+                                            <option value="{{ $count->id }}">{{ $count->name }}</option>
                                             @endforeach
                                         </select>
-                                        @error('county')
+                                        @error('county_id')
                                             <span class="invalid-feedback">
                                             <strong>{{ $message }}</strong>
                                             </span>
@@ -115,13 +115,13 @@
                         </div>
                         <div class="col-sm-6">
                             <div class="form-group">
-                                <label>Avatar/Profile picture</label>
+                                <label>Avatar/Profile picture (optional)</label>
                                 <div class="profile-upload">
                                     <div class="upload-img">
-                                        <img alt="" src="assets/img/user.jpg">
+                                        <img alt="" src="{{ URL::to('assets/img/user.jpg')}}">
                                     </div>
                                     <div class="upload-input">
-                                        <input type="file" name="profile" class="form-control @error('profile') is-invalid @enderror">
+                                        <input type="file" name="profile" class="@error('profile') is-invalid @enderror">
                                         @error('profile')
                                             <span class="invalid-feedback">
                                                 <strong>{{ $message }}</strong>
@@ -134,12 +134,12 @@
                         </div>
                         <div class="col-sm-6">
                             <div class="form-group">
-                                <label>Department/Role<span class="text-danger">*</span><span><a href="{{route('departments.create')}}" title="add new Department"><i class="fa fa-plus-circle"></i></a></span></label>
+                                <label>Department<span class="text-danger">*</span><span class="pl-5"><a href="{{route('departments.create')}}" title="add new Department"><i class="fa fa-plus-circle"></i></a></span></label>
                                 <select class="form-control @error('department_id') is-invalid @enderror" name="department_id">
                                     <option value="">--select--department:--</option>
                                     {{-- desplay all department from department table  but save its id--}}
                                     @foreach ($depart as $departments)
-                                        <option value="{{$departments->id}}">{{ $departments->name }}</option>
+                                        <option value="{{ $departments->id }}">{{ $departments->name }}</option>
                                     @endforeach
                                 </select>
                                 @error('department_id')
@@ -150,7 +150,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="m-t-20 text-center">
+                    <div class="text-center m-t-20">
                         <button type="submit" class="btn btn-primary submit-btn">Create Doctor</button>
                     </div>
                 </form>

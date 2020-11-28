@@ -8,21 +8,31 @@ class Doctors extends Model
 {
     //
     protected $table='doctors';
+    
     protected $fillable=[
         'name',
-        'doctor_id',
         'email',
         'phone',
         'gender',
-        'county',
+        'county_id',
         'address',
         'postalcode',
         'profile',
         'department_id',
+        'created_by'
     ];
 
     //department can have more than one doctor
     public function departments(){
-        return $this->hasMany('App\Department');
+        return $this->belongsTo(Department::class,'department_id');
+        
+    }
+    public function county(){
+        return $this->belongsTo(County::class,'county_id');
+        
+    }
+    public function appointments(){
+        return $this->hasMany(Appointments::class,'doctor_id');
+        
     }
 }

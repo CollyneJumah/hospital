@@ -8,11 +8,7 @@ use App\County;
 use App\Patients;
 class PatientController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+   
     public function __construct()
     {
         $this->middleware('auth');
@@ -26,11 +22,6 @@ class PatientController extends Controller
         return view('crud.patients.index',compact('showPatients','countPatients'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         //
@@ -38,17 +29,10 @@ class PatientController extends Controller
         return view('crud.patients.create', compact('showCounty'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         //
         $data= $request->validate([
-            'patient_id' => ['required','unique:patients','max:7','min:7'],
             'first_name' => ['required','string'],
             'last_name' => ['required','string'],
             'phone' => ['required','min:10','max:13','unique:patients'],
@@ -61,29 +45,17 @@ class PatientController extends Controller
         ]);
 
         $patients= Patients::create($data);
-        return back()->with('message','Patient added');
+        return redirect( route('patients.index'))->with('toast_success','Patient added');
 
 
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show(Patients $patient)
     {
 
         return view('crud.patients.show', compact('patient'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit(Patients $patient)
     {
         //
@@ -92,42 +64,18 @@ class PatientController extends Controller
 
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, Patients $patient)
     {
         //
-        $request->validate([
-            // 'patient_id' => ['required','unique:patients','max:7','min:7'],
-            'first_name' => ['required','string'],
-            'last_name' => ['required','string'],
-            'phone' => ['required','min:10','max:13'],
-            'email' => ['required','email','min:11'],
-            'date_of_birth' => ['required','before:today'],
-            'gender' => ['required'],
-            'address' => ['required'],
-            'county' => ['required'],
-            'postal_code' => ['required'],
-        ]);
+       
         $patient->update($request->all());
-        return back()->with('message','Patient data updated');
+        return back()->with('toast_success','Patient data updated');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(Patients $patient)
     {
         //
         $patient->delete();
-        return redirect()->route('patients.index')->with('message','Patient deleted');
+        return redirect()->route('patients.index')->with('toast_success','Patient deleted');
     }
 }

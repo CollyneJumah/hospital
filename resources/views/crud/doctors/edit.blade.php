@@ -25,17 +25,7 @@
 								@enderror
 							</div>
 						</div>
-						<div class="col-sm-6">
-							<div class="form-group">
-								<label>Doctor Id <span class="text-danger">*</span></label>
-								<input class="form-control @error('doctor_id') is-invalid @enderror" name="doctor_id" type="text" id="doctor_id" value="{{ old('doctor_id') ?? $editDoctor->doctor_id}}" disabled> 
-							@error('doctor_id')
-								<span class="invalid-feedback" role="alert">
-								<strong>{{ $message }}</strong>
-								</span>
-							@enderror
-							</div>
-						</div>
+						
 						<div class="col-sm-4">
 							<div class="form-group">
 								<label>Email <span class="text-danger">*</span></label>
@@ -79,11 +69,10 @@
 									<div class="form-group">
 										<label>County<span class="text-danger">*</span></label>
 										<select class="form-control @error('county') is-invalid @enderror" name="county">
-											<option>{{$editDoctor->county}}</option>
+											<option>{{$editDoctor->county->name}}</option>
 											@foreach ($county as $count)
 											<option>{{$count->name}}-</option>
 											@endforeach
-											
 										</select>
 										@error('county')
 											<span class="invalid-feedback">
@@ -128,10 +117,10 @@
 							<div class="form-group">
 								<label>Department/Role<span class="text-danger">*</span></label>
 								<select class="form-control @error('department') is-invalid @enderror" name="department">
-									{{-- <option>{{$editDoctor->department }}</option> --}}
+									<option>{{$editDoctor->departments->name }}</option>
 									<option value="">--Select Department--</option>
 									@foreach ($department as $depart)
-								    <option value="{{ $depart->id }}">{{$depart->name }}</option>
+								    	<option value="{{ $depart->id }}">{{$depart->name }}</option>
 									@endforeach
 								</select>
 								@error('department')
@@ -142,7 +131,7 @@
 							</div>
 						</div>
 					</div>
-					<div class="m-t-20 text-center">
+					<div class="text-center m-t-20">
 						<button type="submit" class="btn btn-primary submit-btn">Update Doctor</button>
 					</div>
 				</form>
